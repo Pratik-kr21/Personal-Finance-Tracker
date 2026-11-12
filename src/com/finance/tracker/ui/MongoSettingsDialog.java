@@ -28,7 +28,7 @@ public class MongoSettingsDialog extends JDialog {
         headerPanel.setBackground(new Color(19, 42, 69));
         headerPanel.setBorder(new EmptyBorder(15, 20, 15, 20));
 
-        JLabel titleLabel = new JLabel("☁ Connect to MongoDB Atlas");
+        JLabel titleLabel = new JLabel("Connect to MongoDB Atlas");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 17));
         titleLabel.setForeground(Color.WHITE);
 
@@ -92,7 +92,7 @@ public class MongoSettingsDialog extends JDialog {
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 2;
-        statusLabel = new JLabel(MongoDBConnection.isConnected() ? "🟢 Status: Connected" : "🟡 Status: Not Connected");
+        statusLabel = new JLabel(MongoDBConnection.isConnected() ? "\u25CF Status: Connected" : "\u25CF Status: Not Connected");
         statusLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
         if (MongoDBConnection.isConnected()) {
             statusLabel.setForeground(new Color(34, 139, 34));
@@ -107,19 +107,16 @@ public class MongoSettingsDialog extends JDialog {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 12));
         buttonPanel.setBorder(new EmptyBorder(0, 15, 10, 15));
 
-        testBtn = new JButton("Test Connection");
-        testBtn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        testBtn = StyledButton.secondary("Test Connection");
+        testBtn.setPreferredSize(new Dimension(140, 32));
         testBtn.addActionListener(e -> testConnection());
 
-        saveBtn = new JButton("Save & Connect");
-        saveBtn.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        saveBtn.setBackground(new Color(19, 42, 69));
-        saveBtn.setForeground(Color.WHITE);
-        saveBtn.setFocusPainted(false);
+        saveBtn = StyledButton.primary("Save & Connect");
+        saveBtn.setPreferredSize(new Dimension(140, 32));
         saveBtn.addActionListener(e -> saveAndConnect());
 
-        JButton cancelBtn = new JButton("Cancel");
-        cancelBtn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        JButton cancelBtn = StyledButton.secondary("Cancel");
+        cancelBtn.setPreferredSize(new Dimension(90, 32));
         cancelBtn.addActionListener(e -> dispose());
 
         buttonPanel.add(testBtn);
@@ -162,19 +159,19 @@ public class MongoSettingsDialog extends JDialog {
                 try {
                     boolean success = get();
                     if (success) {
-                        statusLabel.setText("🟢 Successfully connected to MongoDB Atlas!");
+                        statusLabel.setText("\u25CF Successfully connected to MongoDB Atlas!");
                         statusLabel.setForeground(new Color(34, 139, 34));
                         JOptionPane.showMessageDialog(MongoSettingsDialog.this,
                                 "Successfully connected to MongoDB Atlas!", "Connection Succeeded", JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        statusLabel.setText("🔴 Connection failed. Check URI and network.");
+                        statusLabel.setText("\u25CF Connection failed. Check URI and network.");
                         statusLabel.setForeground(Color.RED);
                         JOptionPane.showMessageDialog(MongoSettingsDialog.this,
                                 "Failed to connect to MongoDB:\n" + MongoDBConnection.getLastErrorMessage(),
                                 "Connection Failed", JOptionPane.ERROR_MESSAGE);
                     }
                 } catch (Exception ex) {
-                    statusLabel.setText("🔴 Error: " + ex.getMessage());
+                    statusLabel.setText("\u25CF Error: " + ex.getMessage());
                     statusLabel.setForeground(Color.RED);
                 }
             }

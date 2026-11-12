@@ -34,7 +34,7 @@ public class AddTransactionDialog extends JDialog {
         headerPanel.setBackground(new Color(24, 76, 120));
         headerPanel.setBorder(new EmptyBorder(15, 20, 15, 20));
 
-        JLabel titleLabel = new JLabel("➕ Add New Transaction");
+        JLabel titleLabel = new JLabel("Add New Transaction");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 17));
         titleLabel.setForeground(Color.WHITE);
         headerPanel.add(titleLabel, BorderLayout.CENTER);
@@ -161,15 +161,12 @@ public class AddTransactionDialog extends JDialog {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 14));
         buttonPanel.setBorder(new EmptyBorder(0, 15, 10, 15));
 
-        JButton saveBtn = new JButton("Save Transaction");
-        saveBtn.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        saveBtn.setBackground(new Color(24, 76, 120));
-        saveBtn.setForeground(Color.WHITE);
-        saveBtn.setFocusPainted(false);
+        JButton saveBtn = StyledButton.primary("Save Transaction");
+        saveBtn.setPreferredSize(new Dimension(150, 32));
         saveBtn.addActionListener(e -> onSave());
 
-        JButton cancelBtn = new JButton("Cancel");
-        cancelBtn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        JButton cancelBtn = StyledButton.secondary("Cancel");
+        cancelBtn.setPreferredSize(new Dimension(90, 32));
         cancelBtn.addActionListener(e -> dispose());
 
         buttonPanel.add(saveBtn);

@@ -50,7 +50,7 @@ public class AnalyticsDialog extends JDialog {
         headerPanel.setBackground(new Color(30, 41, 59));
         headerPanel.setBorder(new EmptyBorder(12, 18, 12, 18));
 
-        JLabel title = new JLabel("📊 Category Analytics & Visual Breakdown");
+        JLabel title = new JLabel("Category Analytics & Visual Breakdown");
         title.setFont(new Font("Segoe UI", Font.BOLD, 17));
         title.setForeground(Color.WHITE);
 
@@ -112,8 +112,8 @@ public class AnalyticsDialog extends JDialog {
 
         // Footer Close Button
         JPanel footer = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 10));
-        JButton closeBtn = new JButton("Close");
-        closeBtn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        JButton closeBtn = StyledButton.secondary("Close");
+        closeBtn.setPreferredSize(new Dimension(90, 32));
         closeBtn.addActionListener(e -> dispose());
         footer.add(closeBtn);
         add(footer, BorderLayout.SOUTH);

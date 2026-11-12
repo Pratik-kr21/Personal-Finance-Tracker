@@ -88,7 +88,7 @@ public class MainFrame extends JFrame {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setOpaque(false);
 
-        JLabel appTitle = new JLabel("💰 Personal Finance Tracker");
+        JLabel appTitle = new JLabel("Personal Finance Tracker");
         appTitle.setFont(new Font("Segoe UI", Font.BOLD, 22));
         appTitle.setForeground(new Color(30, 41, 59));
 
@@ -160,7 +160,7 @@ public class MainFrame extends JFrame {
                 new EmptyBorder(8, 14, 8, 14)
         ));
 
-        budgetProgressLabel = new JLabel("📅 Budget Usage: " + CURRENCY_SYMBOL + "0.00 / " + CURRENCY_SYMBOL + "1,500.00 (0.0%)");
+        budgetProgressLabel = new JLabel("Budget Usage: " + CURRENCY_SYMBOL + "0.00 / " + CURRENCY_SYMBOL + "1,500.00 (0.0%)");
         budgetProgressLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
         budgetProgressLabel.setForeground(new Color(71, 85, 105));
 
@@ -170,9 +170,9 @@ public class MainFrame extends JFrame {
         budgetProgressBar.setForeground(new Color(16, 149, 93));
         budgetProgressBar.setPreferredSize(new Dimension(320, 22));
 
-        JButton setBudgetBtn = new JButton("✏️ Set Monthly Budget");
+        JButton setBudgetBtn = StyledButton.secondary("Set Budget");
         setBudgetBtn.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        setBudgetBtn.setFocusPainted(false);
+        setBudgetBtn.setPreferredSize(new Dimension(100, 26));
         setBudgetBtn.addActionListener(e -> openSetBudgetDialog());
 
         banner.add(budgetProgressLabel, BorderLayout.WEST);
@@ -331,21 +331,15 @@ public class MainFrame extends JFrame {
         JPanel leftActions = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         leftActions.setOpaque(false);
 
-        JButton addBtn = new JButton("+ Add Transaction");
-        addBtn.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        addBtn.setBackground(new Color(30, 41, 59));
-        addBtn.setForeground(Color.WHITE);
-        addBtn.setFocusPainted(false);
+        JButton addBtn = StyledButton.primary("+ Add Transaction");
         addBtn.setPreferredSize(new Dimension(160, 36));
         addBtn.addActionListener(e -> openAddDialog());
 
-        JButton deleteBtn = new JButton("🗑 Delete Selected");
-        deleteBtn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        JButton deleteBtn = StyledButton.danger("Delete Selected");
         deleteBtn.setPreferredSize(new Dimension(140, 36));
         deleteBtn.addActionListener(e -> deleteSelectedTransaction());
 
-        JButton analyticsBtn = new JButton("📊 View Analytics");
-        analyticsBtn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        JButton analyticsBtn = StyledButton.secondary("View Analytics");
         analyticsBtn.setPreferredSize(new Dimension(140, 36));
         analyticsBtn.addActionListener(e -> openAnalytics());
 
@@ -357,18 +351,15 @@ public class MainFrame extends JFrame {
         JPanel rightActions = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         rightActions.setOpaque(false);
 
-        JButton atlasConfigBtn = new JButton("☁ Configure Atlas");
-        atlasConfigBtn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        JButton atlasConfigBtn = StyledButton.secondary("Configure Atlas");
         atlasConfigBtn.setPreferredSize(new Dimension(140, 36));
         atlasConfigBtn.addActionListener(e -> openAtlasConfig());
 
-        JButton exportBtn = new JButton("📥 Export CSV");
-        exportBtn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        JButton exportBtn = StyledButton.secondary("Export CSV");
         exportBtn.setPreferredSize(new Dimension(120, 36));
         exportBtn.addActionListener(e -> exportToCsv());
 
-        JButton refreshBtn = new JButton("🔄 Refresh");
-        refreshBtn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        JButton refreshBtn = StyledButton.secondary("Refresh");
         refreshBtn.setPreferredSize(new Dimension(100, 36));
         refreshBtn.addActionListener(e -> refreshData());
 
@@ -409,10 +400,10 @@ public class MainFrame extends JFrame {
 
     private void updateDbStatusBadge(boolean connected) {
         if (connected) {
-            dbStatusLabel.setText("🟢 MongoDB Atlas: Connected (" + MongoDBConnection.getDatabaseName() + ")");
+            dbStatusLabel.setText("\u25CF MongoDB Atlas: Connected (" + MongoDBConnection.getDatabaseName() + ")");
             dbStatusLabel.setForeground(new Color(16, 149, 93));
         } else {
-            dbStatusLabel.setText("🟡 MongoDB: Local Backup Mode (Click 'Configure Atlas')");
+            dbStatusLabel.setText("\u25CF MongoDB: Local Backup Mode (Configure Atlas)");
             dbStatusLabel.setForeground(new Color(180, 100, 0));
         }
     }
@@ -461,7 +452,7 @@ public class MainFrame extends JFrame {
             budgetRemainingLabel.setText("Left: " + CURRENCY_SYMBOL + currencyFormat.format(remaining));
             budgetRemainingLabel.setForeground(new Color(16, 149, 93));
         } else {
-            budgetRemainingLabel.setText("⚠️ Over: " + CURRENCY_SYMBOL + currencyFormat.format(Math.abs(remaining)));
+            budgetRemainingLabel.setText("Over by: " + CURRENCY_SYMBOL + currencyFormat.format(Math.abs(remaining)));
             budgetRemainingLabel.setForeground(new Color(220, 38, 38));
         }
 
@@ -470,7 +461,7 @@ public class MainFrame extends JFrame {
         budgetProgressBar.setString(String.format(java.util.Locale.US, "%.1f%% used", percent));
 
         String monthName = now.getMonth().name().charAt(0) + now.getMonth().name().substring(1).toLowerCase();
-        budgetProgressLabel.setText(String.format("📅 %s Spending: %s%s of %s%s budget",
+        budgetProgressLabel.setText(String.format("%s Spending: %s%s of %s%s budget",
                 monthName,
                 CURRENCY_SYMBOL,
                 currencyFormat.format(currentMonthExpense),
