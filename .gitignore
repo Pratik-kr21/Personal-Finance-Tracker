@@ -9,6 +9,7 @@
 # Java Bytecode & Build Output
 # ========================================================
 bin/
+dist/
 out/
 target/
 *.class
