@@ -1,0 +1,54 @@
+# ========================================================
+# Secrets & Environment Variables (DO NOT COMMIT)
+# ========================================================
+.env
+.env.local
+.env.*.local
+
+# ========================================================
+# Java Bytecode & Build Output
+# ========================================================
+bin/
+out/
+target/
+*.class
+sources.txt
+push_all.ps1
+
+# ========================================================
+# Local Database Fallback & Logs
+# ========================================================
+transactions_local.csv
+*.log
+
+# ========================================================
+# IDE & Editor Specific Files
+# ========================================================
+# Eclipse
+.classpath
+.project
+.settings/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# Visual Studio Code
+.vscode/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# ========================================================
+# OS Generated Files
+# ========================================================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
