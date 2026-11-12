@@ -84,7 +84,7 @@ public class AnalyticsDialog extends JDialog {
                 new EmptyBorder(6, 6, 6, 6)
         ));
 
-        String[] cols = {"Category", "Total ($)", "Share (%)"};
+        String[] cols = {"Category", "Total (₹)", "Share (%)"};
         tableModel = new DefaultTableModel(cols, 0) {
             @Override
             public boolean isCellEditable(int r, int c) {
@@ -145,7 +145,7 @@ public class AnalyticsDialog extends JDialog {
             double share = (totalSum > 0) ? (entry.getValue() / totalSum) : 0;
             tableModel.addRow(new Object[]{
                     entry.getKey(),
-                    currencyFormat.format(entry.getValue()),
+                    "₹" + currencyFormat.format(entry.getValue()),
                     percentFormat.format(share)
             });
         }
@@ -225,7 +225,7 @@ public class AnalyticsDialog extends JDialog {
 
             g2.setFont(new Font("Segoe UI", Font.BOLD, 15));
             g2.setColor(type == TransactionType.EXPENSE ? new Color(220, 38, 38) : new Color(16, 149, 93));
-            String amtStr = "$" + currencyFormat.format(total);
+            String amtStr = "₹" + currencyFormat.format(total);
             fm = g2.getFontMetrics();
             g2.drawString(amtStr, holeX + (holeDiameter - fm.stringWidth(amtStr)) / 2, holeY + holeDiameter / 2 + 16);
 

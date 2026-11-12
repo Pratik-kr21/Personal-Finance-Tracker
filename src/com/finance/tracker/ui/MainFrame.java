@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainFrame extends JFrame {
+    public static final String CURRENCY_SYMBOL = "₹";
     private final TransactionDAO dao;
     private final DecimalFormat currencyFormat = new DecimalFormat("#,##0.00");
 
@@ -109,32 +110,32 @@ public class MainFrame extends JFrame {
 
         // Total Balance Card
         JPanel balanceCard = createStatCard("Total Net Balance", new Color(30, 41, 59));
-        balanceValueLabel = new JLabel("$0.00");
+        balanceValueLabel = new JLabel(CURRENCY_SYMBOL + "0.00");
         balanceValueLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
         balanceValueLabel.setForeground(new Color(30, 41, 59));
         balanceCard.add(balanceValueLabel, BorderLayout.CENTER);
 
         // Income Card
         JPanel incomeCard = createStatCard("Total Income", new Color(16, 149, 93));
-        incomeValueLabel = new JLabel("+$0.00");
+        incomeValueLabel = new JLabel("+" + CURRENCY_SYMBOL + "0.00");
         incomeValueLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
         incomeValueLabel.setForeground(new Color(16, 149, 93));
         incomeCard.add(incomeValueLabel, BorderLayout.CENTER);
 
         // Expense Card
         JPanel expenseCard = createStatCard("Total Expenses", new Color(220, 38, 38));
-        expenseValueLabel = new JLabel("-$0.00");
+        expenseValueLabel = new JLabel("-" + CURRENCY_SYMBOL + "0.00");
         expenseValueLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
         expenseValueLabel.setForeground(new Color(220, 38, 38));
         expenseCard.add(expenseValueLabel, BorderLayout.CENTER);
 
         // Monthly Budget Card
         JPanel budgetCard = createStatCard("Monthly Budget", new Color(59, 130, 246));
-        budgetValueLabel = new JLabel("$" + currencyFormat.format(MongoDBConnection.getMonthlyBudget()));
+        budgetValueLabel = new JLabel(CURRENCY_SYMBOL + currencyFormat.format(MongoDBConnection.getMonthlyBudget()));
         budgetValueLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
         budgetValueLabel.setForeground(new Color(59, 130, 246));
 
-        budgetRemainingLabel = new JLabel("Remaining: $0.00");
+        budgetRemainingLabel = new JLabel("Remaining: " + CURRENCY_SYMBOL + "0.00");
         budgetRemainingLabel.setFont(new Font("Segoe UI", Font.PLAIN, 11));
         budgetRemainingLabel.setForeground(new Color(100, 116, 139));
 
@@ -159,7 +160,7 @@ public class MainFrame extends JFrame {
                 new EmptyBorder(8, 14, 8, 14)
         ));
 
-        budgetProgressLabel = new JLabel("📅 Budget Usage: $0.00 / $1,500.00 (0.0%)");
+        budgetProgressLabel = new JLabel("📅 Budget Usage: " + CURRENCY_SYMBOL + "0.00 / " + CURRENCY_SYMBOL + "1,500.00 (0.0%)");
         budgetProgressLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
         budgetProgressLabel.setForeground(new Color(71, 85, 105));
 
@@ -438,29 +439,29 @@ public class MainFrame extends JFrame {
 
         double netBalance = totalIncome - totalExpense;
 
-        incomeValueLabel.setText("+$" + currencyFormat.format(totalIncome));
-        expenseValueLabel.setText("-$" + currencyFormat.format(totalExpense));
+        incomeValueLabel.setText("+" + CURRENCY_SYMBOL + currencyFormat.format(totalIncome));
+        expenseValueLabel.setText("-" + CURRENCY_SYMBOL + currencyFormat.format(totalExpense));
 
         if (netBalance >= 0) {
-            balanceValueLabel.setText("+$" + currencyFormat.format(netBalance));
+            balanceValueLabel.setText("+" + CURRENCY_SYMBOL + currencyFormat.format(netBalance));
             balanceValueLabel.setForeground(new Color(16, 149, 93));
         } else {
-            balanceValueLabel.setText("-$" + currencyFormat.format(Math.abs(netBalance)));
+            balanceValueLabel.setText("-" + CURRENCY_SYMBOL + currencyFormat.format(Math.abs(netBalance)));
             balanceValueLabel.setForeground(new Color(220, 38, 38));
         }
 
         // Budget Calculations
         double monthlyBudget = MongoDBConnection.getMonthlyBudget();
-        budgetValueLabel.setText("$" + currencyFormat.format(monthlyBudget));
+        budgetValueLabel.setText(CURRENCY_SYMBOL + currencyFormat.format(monthlyBudget));
 
         double remaining = monthlyBudget - currentMonthExpense;
         double percent = (monthlyBudget > 0) ? (currentMonthExpense / monthlyBudget) * 100.0 : 0.0;
 
         if (remaining >= 0) {
-            budgetRemainingLabel.setText("Left: $" + currencyFormat.format(remaining));
+            budgetRemainingLabel.setText("Left: " + CURRENCY_SYMBOL + currencyFormat.format(remaining));
             budgetRemainingLabel.setForeground(new Color(16, 149, 93));
         } else {
-            budgetRemainingLabel.setText("⚠️ Over: $" + currencyFormat.format(Math.abs(remaining)));
+            budgetRemainingLabel.setText("⚠️ Over: " + CURRENCY_SYMBOL + currencyFormat.format(Math.abs(remaining)));
             budgetRemainingLabel.setForeground(new Color(220, 38, 38));
         }
 
@@ -469,9 +470,11 @@ public class MainFrame extends JFrame {
         budgetProgressBar.setString(String.format(java.util.Locale.US, "%.1f%% used", percent));
 
         String monthName = now.getMonth().name().charAt(0) + now.getMonth().name().substring(1).toLowerCase();
-        budgetProgressLabel.setText(String.format("📅 %s Spending: $%s of $%s budget",
+        budgetProgressLabel.setText(String.format("📅 %s Spending: %s%s of %s%s budget",
                 monthName,
+                CURRENCY_SYMBOL,
                 currencyFormat.format(currentMonthExpense),
+                CURRENCY_SYMBOL,
                 currencyFormat.format(monthlyBudget)));
 
         if (percent >= 100.0) {
@@ -486,7 +489,7 @@ public class MainFrame extends JFrame {
     private void openSetBudgetDialog() {
         double current = MongoDBConnection.getMonthlyBudget();
         String input = JOptionPane.showInputDialog(this,
-                "Enter your target monthly budget limit ($):",
+                "Enter your target monthly budget limit (" + CURRENCY_SYMBOL + "):",
                 String.format(java.util.Locale.US, "%.2f", current));
 
         if (input != null && !input.trim().isEmpty()) {
@@ -499,7 +502,7 @@ public class MainFrame extends JFrame {
                 MongoDBConnection.setMonthlyBudget(val);
                 updateStats();
                 JOptionPane.showMessageDialog(this,
-                        "Monthly budget updated to $" + currencyFormat.format(val),
+                        "Monthly budget updated to " + CURRENCY_SYMBOL + currencyFormat.format(val),
                         "Budget Saved", JOptionPane.INFORMATION_MESSAGE);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Please enter a valid numeric amount.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
@@ -541,7 +544,7 @@ public class MainFrame extends JFrame {
             }
 
             // Amount formatted with +/-
-            String formattedAmount = (t.getType() == TransactionType.INCOME ? "+$" : "-$") + currencyFormat.format(t.getAmount());
+            String formattedAmount = (t.getType() == TransactionType.INCOME ? "+" : "-") + CURRENCY_SYMBOL + currencyFormat.format(t.getAmount());
 
             tableModel.addRow(new Object[]{
                     t.getDate().format(Transaction.DATE_FORMATTER),

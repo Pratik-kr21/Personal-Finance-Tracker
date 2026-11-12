@@ -79,7 +79,7 @@ public class AddTransactionDialog extends JDialog {
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.weightx = 0.0;
-        JLabel amtLbl = new JLabel("Amount ($):");
+        JLabel amtLbl = new JLabel("Amount (₹):");
         amtLbl.setFont(new Font("Segoe UI", Font.BOLD, 13));
         formPanel.add(amtLbl, gbc);
 
